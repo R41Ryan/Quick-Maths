@@ -9,12 +9,28 @@ void clear() {
 * Prompts the user to input the min and max absolute boundaries for the operands.
 */
 void promptBoundaries(int& min, int& max) {
-    std::cout << "Please enter the maximum value for operand\n";
-    std::cin >> max;
-    clear();
-    std::cout << "Please enter the minimum value for operand\n";
-    std::cin >> min;
-    clear();
+    bool valid = false;
+    while (!valid) {
+        std::cout << "\nPlease enter the maximum value for operand\n";
+        std::cin >> max;
+        clear();
+        std::cout << "\nPlease enter the minimum value for operand\n";
+        std::cin >> min;
+        clear();
+
+        if (max < 0 || min < 0) {
+            std::cout << "\nYou cannot have negative values for the absolute max and/or min operands\n\n";
+        }
+        else if (max == 0) {
+            std::cout << "\nThe maximum value cannot be 0.\n\n";
+        }
+        else if (max < min) {
+            std::cout << "\nThe maximum value cannot be less then the minimum values.\n\n";
+        }
+        else {
+            valid = true;
+        }
+    }
 }
 
 /*
@@ -31,7 +47,7 @@ bool testIntAddition(int min, int max) {
     std::cin >> userInput;
     clear();
     if (userInput == answer) {
-        std::cout << "Correct!" << std::endl;
+        std::cout << "Correct!\n";
         return true;
     }
     else {
@@ -42,7 +58,10 @@ bool testIntAddition(int min, int max) {
 
 int main()
 {
-    int max, min;
-    promptBoundaries(min, max);
-    testIntAddition(min, max);
+    bool quit = false;
+    while (!quit) {
+        int max, min;
+        promptBoundaries(min, max);
+        testIntAddition(min, max);
+    }
 }
