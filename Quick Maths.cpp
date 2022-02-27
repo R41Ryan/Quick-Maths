@@ -6,6 +6,22 @@ void clear() {
 }
 
 /*
+* This displays a menu with a list of options for the user to choose, and prompts for an input. It returns an integer representing
+* what the user inputted.
+*/
+int displayMenu(int min, int max) {
+    std::cout <<
+        "Menu:\n" <<
+        "1. Quit\n" <<
+        "2. Change operand min/max values (min = " << min << ", max = " << max << ")\n" <<
+        "3. Integer Addition\n";
+    int userInput;
+    std::cin >> userInput;
+    clear();
+    return userInput;
+}
+
+/*
 * Prompts the user to input the min and max absolute boundaries for the operands.
 */
 void promptBoundaries(int& min, int& max) {
@@ -47,21 +63,31 @@ bool testIntAddition(int min, int max) {
     std::cin >> userInput;
     clear();
     if (userInput == answer) {
-        std::cout << "Correct!\n";
+        std::cout << "Correct!\n\n";
         return true;
     }
     else {
-        std::cout << "Incorrect! Answer was " << answer << std::endl;
+        std::cout << "Incorrect! Answer was " << answer << std::endl << std::endl;
         return false;
     }
 }
 
 int main()
 {
+    int max = 10, min = 0;
     bool quit = false;
     while (!quit) {
-        int max, min;
-        promptBoundaries(min, max);
-        testIntAddition(min, max);
+        int menuOption = displayMenu(min, max);
+        switch (menuOption) {
+        case 1: // Chose "1. Quit"
+            quit = true;
+            break;
+        case 2: // Chose "2. Change operang min/max values"
+            promptBoundaries(min, max);
+            break;
+        case 3: // Chose "3. Integer Addition"
+            testIntAddition(min, max);
+            break;
+        }
     }
 }
