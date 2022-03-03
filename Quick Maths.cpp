@@ -54,14 +54,19 @@ void promptBoundaries(int& min, int& max) {
 * min and max indicate the lowest and highest absolute values for the addends.
 */
 bool testIntAddition(int min, int max) {
+    time_t t1, t2;
     srand(time(0));
     int operand1 = rand() % max + min;
     int operand2 = rand() % max + min;
     int answer = operand1 + operand2;
     int userInput;
     std::cout << operand1 << " + " << operand2 << " = ?" << std::endl;
+    time(&t1);
     std::cin >> userInput;
     clear();
+    time(&t2);
+    double seconds = difftime(t2, t1);
+    std::cout << "Time Elapsed: " << seconds << " seconds.\n";
     if (userInput == answer) {
         std::cout << "Correct!\n\n";
         return true;
