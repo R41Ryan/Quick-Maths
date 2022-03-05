@@ -1,4 +1,5 @@
 #include <iostream>
+#include <chrono>
 
 // Clears the input buffer.
 void clear() {
@@ -50,23 +51,28 @@ void promptBoundaries(int& min, int& max) {
 }
 
 /*
-* Provides a random integer addition question for the user to inputand returns either true or false, depending on whether they got it right.
+* Gets the current time in milliseconds
+*/
+uint64_t timeMilli() {
+    uint64_t timeSinceEpochMilliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch()
+        ).count();
+    return timeSinceEpochMilliseconds;
+}
+
+/*
+* Provides a random integer addition question for the user to input and returns either true or false, depending on whether they got it right.
 * min and max indicate the lowest and highest absolute values for the addends.
 */
 bool testIntAddition(int min, int max) {
-    time_t t1, t2;
     srand(time(0));
     int operand1 = rand() % max + min;
     int operand2 = rand() % max + min;
     int answer = operand1 + operand2;
     int userInput;
     std::cout << operand1 << " + " << operand2 << " = ?" << std::endl;
-    time(&t1);
     std::cin >> userInput;
     clear();
-    time(&t2);
-    double seconds = difftime(t2, t1);
-    std::cout << "Time Elapsed: " << seconds << " seconds.\n";
     if (userInput == answer) {
         std::cout << "Correct!\n\n";
         return true;
@@ -75,6 +81,33 @@ bool testIntAddition(int min, int max) {
         std::cout << "Incorrect! Answer was " << answer << std::endl << std::endl;
         return false;
     }
+}
+
+/*
+* Provides a series of arithmetic questions while keeping score and the rate at which you answer the questions.
+* It then prints the resulting total score percentage and overall rate of answering.
+* 
+* @parameter type is an integer to indicate what kind of arithmetic questions are to be asked.
+* (0 = addition, 1 = subtraction, 2 = multiplication, 4 = division)
+* 
+* @parameter num is the number of questions to be quizzed.
+*/
+void arithmeticGame(int min, int max, int type, int num) {
+    int score = 0;
+    double rate = 0;
+
+    uint64_t t1, t2;
+    t1 = timeMilli();
+    for (int i = 0; i < num; i++) {
+        if (testIntAddition(min, max))
+            score += 1;
+    }
+    t2 = timeMilli();
+    double seconds = difftime(t2, t1) / 1000.0;
+    rate = score / seconds;
+    std::cout << "Score: " << score << "/" << num
+        << " = " << (float)score/(float)num
+        << ", Rate = " << rate << "\n\n";
 }
 
 int main()
@@ -91,7 +124,7 @@ int main()
             promptBoundaries(min, max);
             break;
         case 3: // Chose "3. Integer Addition"
-            testIntAddition(min, max);
+            arithmeticGame(min, max, 0, 1);
             break;
         }
     }
