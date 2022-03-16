@@ -16,7 +16,8 @@ int displayMenu() {
         "1. Quit\n" <<
         "2. Options\n" <<
         "3. Integer Addition\n" <<
-        "4. Integer Subtraction\n";
+        "4. Integer Subtraction\n" <<
+        "5. Integer Multiplication\n";
     int userInput;
     std::cin >> userInput;
     clear();
@@ -142,6 +143,29 @@ bool testIntSubtraction(int min, int max) {
 }
 
 /*
+* Provides a random integer multiplication question for the user to answer and returns either true or false, depending on whether they got it right
+* or not. min and max indicate the lowest and highest absolute values for the multiplicands.
+*/
+bool testIntMultiplication(int min, int max) {
+    srand(time(0));
+    int multiplicand1 = rand() % max + min;
+    int multiplicand2 = rand() % max + min;
+    int product = multiplicand1 * multiplicand2;
+    int userInput;
+    std::cout << multiplicand1 << " X " << multiplicand2 << " = ?" << std::endl;
+    std::cin >> userInput;
+    clear();
+    if (userInput == product) {
+        std::cout << "Correct!\n\n";
+        return true;
+    }
+    else {
+        std::cout << "Incorrect! Answer was " << product << std::endl << std::endl;
+        return false;
+    }
+}
+
+/*
 * Provides a series of arithmetic questions while keeping score and the rate at which you answer the questions. 
 * It then prints the resulting total score percentage and overall rate of answering.
 * 
@@ -166,6 +190,10 @@ void arithmeticGame(int min, int max, int type, int num) {
             if (testIntSubtraction(min, max))
                 score++;
             break;
+        case 2:
+            if (testIntMultiplication(min, max))
+                score++;
+            break;
         }
     }
     t2 = timeMilli();
@@ -178,7 +206,7 @@ void arithmeticGame(int min, int max, int type, int num) {
 
 int main()
 {
-    int min = 0, max = 10, num = 10;
+    int min = 1, max = 10, num = 10;
     bool quit = false;
     bool quit2 = false;
     while (!quit) {
@@ -211,6 +239,9 @@ int main()
             break;
         case 4: // Chose "4. Integer Subtraction"
             arithmeticGame(min, max, 1, num);
+            break;
+        case 5: // Chose "5. Integer Multiplication"
+            arithmeticGame(min, max, 2, num);
             break;
         default:
             std::cout << "Invalid input.\n\n";
