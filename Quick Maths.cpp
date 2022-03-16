@@ -17,7 +17,8 @@ int displayMenu() {
         "2. Options\n" <<
         "3. Integer Addition\n" <<
         "4. Integer Subtraction\n" <<
-        "5. Integer Multiplication\n";
+        "5. Integer Multiplication\n" <<
+        "6. Integer Division\n";
     int userInput;
     std::cin >> userInput;
     clear();
@@ -166,6 +167,29 @@ bool testIntMultiplication(int min, int max) {
 }
 
 /*
+* Provides a random integer division question for the user to answer and returns either true or false, depending on whether they got it right
+* or not. min and max indicate the lowest and highest absolute values for the divisor and quotient.
+*/
+bool testIntDivision(int min, int max) {
+    srand(time(0));
+    int divisor = rand() % max + min;
+    int quotient = rand() % max + min;
+    int dividend = divisor * quotient;
+    int userInput;
+    std::cout << dividend << " / " << divisor << " = ?" << std::endl;
+    std::cin >> userInput;
+    clear();
+    if (userInput == quotient) {
+        std::cout << "Correct!\n\n";
+        return true;
+    }
+    else {
+        std::cout << "Incorrect! Answer was " << quotient << std::endl << std::endl;
+        return false;
+    }
+}
+
+/*
 * Provides a series of arithmetic questions while keeping score and the rate at which you answer the questions. 
 * It then prints the resulting total score percentage and overall rate of answering.
 * 
@@ -194,6 +218,12 @@ void arithmeticGame(int min, int max, int type, int num) {
             if (testIntMultiplication(min, max))
                 score++;
             break;
+        case 3:
+            if (testIntDivision(min, max))
+                score++;
+            break;
+        default:
+            std::cout << "Incorrect type inputted.\n\n";
         }
     }
     t2 = timeMilli();
@@ -242,6 +272,9 @@ int main()
             break;
         case 5: // Chose "5. Integer Multiplication"
             arithmeticGame(min, max, 2, num);
+            break;
+        case 6: // Chose "6. Integer Division"
+            arithmeticGame(min, max, 3, num);
             break;
         default:
             std::cout << "Invalid input.\n\n";
