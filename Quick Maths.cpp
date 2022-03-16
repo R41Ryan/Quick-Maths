@@ -15,7 +15,8 @@ int displayMenu() {
         "\nMenu:\n" <<
         "1. Quit\n" <<
         "2. Options\n" <<
-        "3. Integer Addition\n";
+        "3. Integer Addition\n" <<
+        "4. Integer Subtraction\n";
     int userInput;
     std::cin >> userInput;
     clear();
@@ -95,7 +96,7 @@ uint64_t timeMilli() {
 }
 
 /*
-* Provides a random integer addition question for the user to input and returns either true or false, depending on whether they got it right.
+* Provides a random integer addition question for the user to answer and returns either true or false, depending on whether they got it right.
 * min and max indicate the lowest and highest absolute values for the addends.
 */
 bool testIntAddition(int min, int max) {
@@ -118,11 +119,34 @@ bool testIntAddition(int min, int max) {
 }
 
 /*
+* Provides a random integer subtraction question for the user to answer and returns either true or false, depending on whether they got it right
+* or not. min and max indicate the lowest and highest absolute values for the subtrahend and difference.
+*/
+bool testIntSubtraction(int min, int max) {
+    srand(time(0));
+    int subtrahend = rand() % max + min;
+    int difference = rand() % max + min;
+    int minuend = subtrahend + difference;
+    int userInput;
+    std::cout << minuend << " - " << subtrahend << " = ?" << std::endl;
+    std::cin >> userInput;
+    clear();
+    if (userInput == difference) {
+        std::cout << "Correct!\n\n";
+        return true;
+    }
+    else {
+        std::cout << "Incorrect! Answer was " << difference << std::endl << std::endl;
+        return false;
+    }
+}
+
+/*
 * Provides a series of arithmetic questions while keeping score and the rate at which you answer the questions. 
 * It then prints the resulting total score percentage and overall rate of answering.
 * 
 * @parameter type is an integer to indicate what kind of arithmetic questions are to be asked.
-* (0 = addition, 1 = subtraction, 2 = multiplication, 4 = division)
+* (0 = addition, 1 = subtraction, 2 = multiplication, 3 = division)
 * 
 * @parameter num is the number of questions to be quizzed.
 */
@@ -133,15 +157,23 @@ void arithmeticGame(int min, int max, int type, int num) {
     uint64_t t1, t2;
     t1 = timeMilli();
     for (int i = 0; i < num; i++) {
-        if (testIntAddition(min, max))
-            score += 1;
+        switch (type) {
+        case 0:
+            if (testIntAddition(min, max))
+                score++;
+            break;
+        case 1:
+            if (testIntSubtraction(min, max))
+                score++;
+            break;
+        }
     }
     t2 = timeMilli();
     double seconds = difftime(t2, t1) / 1000.0;
     rate = score / seconds;
     std::cout << "Score: " << score << "/" << num
         << " = " << (float)score/(float)num
-        << ", Rate = " << rate << "\n\n";
+        << ", Rate = " << rate << " correct answers per second\n\n";
 }
 
 int main()
@@ -176,6 +208,9 @@ int main()
             break;
         case 3: // Chose "3. Integer Addition"
             arithmeticGame(min, max, 0, num);
+            break;
+        case 4: // Chose "4. Integer Subtraction"
+            arithmeticGame(min, max, 1, num);
             break;
         default:
             std::cout << "Invalid input.\n\n";
