@@ -1,5 +1,9 @@
 #include <iostream>
 #include <chrono>
+#include <fstream>
+
+// Created Classes
+#include "Options.h"
 
 // Clears the input buffer.
 void clear() {
@@ -43,48 +47,50 @@ int displayOptions(int min, int max, int num) {
 /*
 * Prompts the user to input the min and max absolute boundaries for the operands.
 */
-void promptBoundaries(int& min, int& max) {
+void promptBoundaries(Options* optionMenu) {
     bool valid = false;
     while (!valid) {
         std::cout << "\nPlease enter the minimum value for operand\n";
-        std::cin >> min;
+        std::cin >> optionMenu->minValue;
         clear();
         std::cout << "\nPlease enter the maximum value for operand\n";
-        std::cin >> max;
+        std::cin >> optionMenu->maxValue;
         clear();
 
-        if (max < 0 || min < 0) {
+        if (optionMenu->maxValue < 0 || optionMenu->minValue < 0) {
             std::cout << "\nYou cannot have negative values for the absolute max and/or min operands\n\n";
         }
-        else if (max == 0) {
+        else if (optionMenu->maxValue == 0) {
             std::cout << "\nThe maximum value cannot be 0.\n\n";
         }
-        else if (max < min) {
+        else if (optionMenu->maxValue < optionMenu->minValue) {
             std::cout << "\nThe maximum value cannot be less then the minimum values.\n\n";
         }
         else {
             valid = true;
         }
     }
+    optionMenu->saveOptions();
 }
 
 /*
 * Prompts the user to input the number of questions to be asked during a game session.
 */
-void promptGameLength(int& num) {
+void promptGameLength(Options* optionMenu) {
     bool valid = false;
     while (!valid) {
         std::cout << "\nPlease enter the maximum value for operand\n";
-        std::cin >> num;
+        std::cin >> optionMenu->questionLength;
         clear();
 
-        if (num <= 0) {
+        if (optionMenu->questionLength <= 0) {
             std::cout << "\nYou must enter a positive integer.\n\n";
         }
         else {
             valid = true;
         }
     }
+    optionMenu->saveOptions();
 }
 
 /*
@@ -236,7 +242,8 @@ void arithmeticGame(int min, int max, int type, int num) {
 
 int main()
 {
-    int min = 1, max = 10, num = 10;
+    Options* optionMenu = new Options();
+
     bool quit = false;
     bool quit2 = false;
     while (!quit) {
@@ -248,16 +255,16 @@ int main()
         case 2: // Chose "2. Change game options"
             quit2 = false;
             while (!quit2) {
-                int optionChoice = displayOptions(min, max, num);
+                int optionChoice = displayOptions(optionMenu->minValue, optionMenu->maxValue, optionMenu->questionLength);
                 switch (optionChoice) {
                 case 1: // Chose "1. Quit"
                     quit2 = true;
                     break;
                 case 2: // Chose "2. Change operands"
-                    promptBoundaries(min, max);
+                    promptBoundaries(optionMenu);
                     break;
                 case 3: // Chose "3. Change length"
-                    promptGameLength(num);
+                    promptGameLength(optionMenu);
                     break;
                 default:
                     std::cout << "Invalid inputs\n\n";
@@ -265,16 +272,16 @@ int main()
             }
             break;
         case 3: // Chose "3. Integer Addition"
-            arithmeticGame(min, max, 0, num);
+            arithmeticGame(optionMenu->minValue, optionMenu->maxValue, 0, optionMenu->questionLength);
             break;
         case 4: // Chose "4. Integer Subtraction"
-            arithmeticGame(min, max, 1, num);
+            arithmeticGame(optionMenu->minValue, optionMenu->maxValue, 1, optionMenu->questionLength);
             break;
         case 5: // Chose "5. Integer Multiplication"
-            arithmeticGame(min, max, 2, num);
+            arithmeticGame(optionMenu->minValue, optionMenu->maxValue, 2, optionMenu->questionLength);
             break;
         case 6: // Chose "6. Integer Division"
-            arithmeticGame(min, max, 3, num);
+            arithmeticGame(optionMenu->minValue, optionMenu->maxValue, 3, optionMenu->questionLength);
             break;
         default:
             std::cout << "Invalid input.\n\n";
