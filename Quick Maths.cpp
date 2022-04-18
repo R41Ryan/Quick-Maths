@@ -4,6 +4,7 @@
 
 // Created Classes
 #include "Options.h"
+#include "Score.h"
 
 // Clears the input buffer.
 void clear() {
@@ -234,10 +235,12 @@ void arithmeticGame(int min, int max, int type, int num) {
     }
     t2 = timeMilli();
     double seconds = difftime(t2, t1) / 1000.0;
-    rate = score / seconds;
-    std::cout << "Score: " << score << "/" << num
-        << " = " << (float)score/(float)num
-        << ", Rate = " << rate << " correct answers per second\n\n";
+    std::cout << "Please enter a name for your score:\n";
+    std::string userInput;
+    std::cin >> userInput;
+    clear();
+    Score newScore(score, num, seconds, type, userInput);
+    newScore.print();
 }
 
 int main()
