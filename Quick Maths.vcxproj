@@ -139,11 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DoubleLinkedList.cpp" />
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="Quick Maths.cpp" />
     <ClCompile Include="Score.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DoubleLinkedList.h" />
     <ClInclude Include="Options.h" />
     <ClInclude Include="Score.h" />
   </ItemGroup>
