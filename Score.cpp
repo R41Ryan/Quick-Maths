@@ -11,16 +11,16 @@ Score::Score(int correct, int total, double time, int type, std::string name) {
 
 	rate = correct / time;
 	switch (type) {
-	case 0:
+	case 0: // Addition Score
 		score = ((double)correct / (double)total) * (rate / 0.2);
 		break;
-	case 1:
+	case 1: // Subtraction Score
 		score = ((double)correct / (double)total) * (rate / 0.2) * 1.5;
 		break;
-	case 2:
+	case 2: // Multiplication Score
 		score = ((double)correct / (double)total) * (rate / 0.2) * 2;
 		break;
-	case 3:
+	case 3: // Division Score
 		score = ((double)correct / (double)total) * (rate / 0.2) * 2.5;
 		break;
 	default:
@@ -29,11 +29,17 @@ Score::Score(int correct, int total, double time, int type, std::string name) {
 	dateTime = std::chrono::system_clock::now();
 }
 
+Score::Score()
+{
+
+}
+
 void Score::print()
 {
 	std::cout << std::setw(15) << name.c_str();
-	std::cout << std::setw(10) << correct << "/" << total;
-	std::cout << std::setw(10) << time;
+	std::cout << std::setw(10) << correct;
+	std::cout << std::setw(10) << total;
+	std::cout << std::setw(15) << time;
 	switch (type) {
 	case 0:
 		std::cout << std::setw(15) << "Addition";

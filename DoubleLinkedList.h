@@ -23,8 +23,7 @@ public:
 	~DoubleLinkedList();
 
 	/*
-	Adds a new node with the newItem to the list to just next of where the nodePointer is at. If nodePointer is NULL, adds it to headNode.
-	nodePointer points to the newly added node.
+	Adds a new node with the newItem to the list to the beginning of the score list (where headNode is). nodePointer points to the new node.
 	*/
 	void addItem(T* newItem);
 
@@ -70,7 +69,7 @@ public:
 
 	void setHeadNode(Node<T>* newHead);
 	void setNodePointer(Node<T>* newPointer);
-	void setCount(Node<T>* newCount);
+	void setCount(int newCount);
 	Node<T>* getHead();
 	Node<T>* getPointer();
 	int getCount();

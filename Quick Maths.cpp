@@ -5,6 +5,7 @@
 // Created Classes
 #include "Options.h"
 #include "Score.h"
+#include "Scoreboard.h"
 
 // Clears the input buffer.
 void clear() {
@@ -245,6 +246,27 @@ void arithmeticGame(int min, int max, int type, int num) {
 
 int main()
 {
+    // Testing
+#if 1
+    Scoreboard* scoreboard = new Scoreboard();
+    
+    scoreboard->deserialize();
+    scoreboard->print();
+    
+    
+    /*
+    Score* testScore = new Score(3, 4, 5.0f, 0, "Farquad");
+    scoreboard->addScore(testScore);
+    Score* testScore2 = new Score(10, 10, 10.f, 2, "Ryan");
+    scoreboard->addScore(testScore2);
+    scoreboard->print();
+    scoreboard->serialize();
+    scoreboard->exportScoreboard();
+    */
+    
+#endif
+    // Actual program
+#if 0
     Options* optionMenu = new Options();
 
     bool quit = false;
@@ -290,4 +312,5 @@ int main()
             std::cout << "Invalid input.\n\n";
         }
     }
+#endif
 }
