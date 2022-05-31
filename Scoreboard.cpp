@@ -79,8 +79,7 @@ void Scoreboard::serialize()
 		scoreboardOutput << toSerialize->score << "\n";
 		
 		// Serialize the date time by converting it into integer values of time since epoch.
-		int serializeDateTime = toSerialize->dateTime.time_since_epoch().count();
-		scoreboardOutput << serializeDateTime << "\n";
+		scoreboardOutput << std::chrono::system_clock::to_time_t(toSerialize->dateTime) << "\n";
 
 		scoreList->pointerPrev();
 
@@ -108,11 +107,12 @@ void Scoreboard::deserialize()
 			scoreboardInput >> toAdd->type;
 			scoreboardInput >> toAdd->score;
 
-			int serializeDateTime;
-			scoreboardInput >> serializeDateTime;
-			std::chrono::system_clock::duration durationDateTime(serializeDateTime);
-			std::chrono::system_clock::time_point toAddTimePoint(durationDateTime);
-			toAdd->dateTime = toAddTimePoint;
+			std::time_t serializeDateTime;
+			if (scoreboardInput >> serializeDateTime)
+			{
+				auto dateTime = std::chrono::system_clock::from_time_t(serializeDateTime);
+				toAdd->dateTime = dateTime;
+			}
 
 			addScore(toAdd);
 		}

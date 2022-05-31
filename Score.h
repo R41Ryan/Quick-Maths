@@ -10,7 +10,7 @@ struct Score {
 	std::string name;
 	double rate;
 	double score;
-	std::chrono::system_clock::time_point dateTime;
+	std::chrono::time_point<std::chrono::system_clock> dateTime;
 
 	/*
 	* Correct = # of correct answers

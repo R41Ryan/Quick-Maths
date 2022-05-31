@@ -7,6 +7,9 @@
 #include "Score.h"
 #include "Scoreboard.h"
 
+// Static Data
+Scoreboard* scoreboard;
+
 // Clears the input buffer.
 void clear() {
     while (getchar() != '\n');
@@ -240,19 +243,18 @@ void arithmeticGame(int min, int max, int type, int num) {
     std::string userInput;
     std::cin >> userInput;
     clear();
-    Score newScore(score, num, seconds, type, userInput);
-    newScore.print();
+    Score* newScore = new Score(score, num, seconds, type, userInput);
+    scoreboard->addScore(newScore);
 }
 
 int main()
 {
     // Testing
-#if 1
+#if 0
     Scoreboard* scoreboard = new Scoreboard();
     
     scoreboard->deserialize();
     scoreboard->print();
-    
     
     /*
     Score* testScore = new Score(3, 4, 5.0f, 0, "Farquad");
@@ -266,8 +268,10 @@ int main()
     
 #endif
     // Actual program
-#if 0
+#if 1
     Options* optionMenu = new Options();
+    scoreboard = new Scoreboard();
+    scoreboard->deserialize();
 
     bool quit = false;
     bool quit2 = false;

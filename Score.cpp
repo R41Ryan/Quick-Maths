@@ -31,7 +31,12 @@ Score::Score(int correct, int total, double time, int type, std::string name) {
 
 Score::Score()
 {
-
+	this->correct = 0;
+	this->total = 0;
+	this->time = 0;
+	this->type = 0;
+	this->rate = 0;
+	this->score = 0;
 }
 
 void Score::print()
