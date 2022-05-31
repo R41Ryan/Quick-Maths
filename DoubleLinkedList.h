@@ -28,7 +28,7 @@ public:
 	void addItem(T* newItem);
 
 	/*
-	Removes the node that nodePointer is pointing to. If nodePointer is NULL, does nothing. nodePointer moves to the next node after removal.
+	Removes the node at the top of the list (headNode). If the list is already empty, does nothing. nodePointer moves to the next node after removal.
 	*/
 	void removeItem();
 

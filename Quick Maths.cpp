@@ -27,7 +27,10 @@ int displayMenu() {
         "3. Integer Addition\n" <<
         "4. Integer Subtraction\n" <<
         "5. Integer Multiplication\n" <<
-        "6. Integer Division\n";
+        "6. Integer Division\n" <<
+        "7. View Scoreboard\n" <<
+        "8. Export Scoreboard\n" <<
+        "9. Clear Scoreboard\n";
     int userInput;
     std::cin >> userInput;
     clear();
@@ -245,6 +248,7 @@ void arithmeticGame(int min, int max, int type, int num) {
     clear();
     Score* newScore = new Score(score, num, seconds, type, userInput);
     scoreboard->addScore(newScore);
+    scoreboard->serialize();
 }
 
 int main()
@@ -311,6 +315,18 @@ int main()
             break;
         case 6: // Chose "6. Integer Division"
             arithmeticGame(optionMenu->minValue, optionMenu->maxValue, 3, optionMenu->questionLength);
+            break;
+        case 7: // Chose "7. View Scoreboard"
+            scoreboard->print();
+            break;
+        case 8: // Chose "8. Export Scoreboard"
+            scoreboard->exportScoreboard();
+            std::cout << "\nExported to \"scoreboard.txt\"\n";
+            break;
+        case 9: // Chose "9. Clear Scoreboard"
+            scoreboard->clearScoreboard();
+            scoreboard->serialize();
+            std::cout << "\nScoreboard cleared\n";
             break;
         default:
             std::cout << "Invalid input.\n\n";

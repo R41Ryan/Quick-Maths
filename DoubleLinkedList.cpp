@@ -70,25 +70,15 @@ void DoubleLinkedList<T>::addItem(T* newItem)
 template<class T>
 void DoubleLinkedList<T>::removeItem()
 {
-	if (nodePointer != nullptr) {
-		if (nodePointer == headNode) {
+	if (count > 0)
+	{
+		nodePointer = headNode;
+		if (count > 1)
+		{
 			headNode = nodePointer->next;
-			delete nodePointer;
-			nodePointer = headNode;
 		}
-		else {
-			if (nodePointer->prev != nullptr && nodePointer->next != nullptr) {
-				Node<T>* prevNode = nodePointer->prev;
-				Node<T>* nextNode = nodePointer->next;
-				prevNode->next = nextNode;
-				nextNode->prev = prevNode;
-			}
-			Node<T>* toDelete = nodePointer;
-			nodePointer = nodePointer->next;
-			if (nodePointer == nullptr)
-				nodePointer = headNode;
-			delete toDelete;
-		}
+		delete nodePointer;
+		nodePointer = headNode;
 		count--;
 	}
 }
