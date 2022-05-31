@@ -4,4 +4,4 @@ You can modify the difficulty of these questions by changing the range of the op
 Once the series of questions have been answered, you can see your score summarized at the end.
 
 # Installation
-Simply download the Quick-Maths.zip and extract its contents. Run the executable to run the application.
+Simply download the "Quick Maths.zip" and extract its contents into its own folder. Run the executable to run the application.
