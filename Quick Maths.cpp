@@ -87,7 +87,7 @@ void promptBoundaries(Options* optionMenu) {
 void promptGameLength(Options* optionMenu) {
     bool valid = false;
     while (!valid) {
-        std::cout << "\nPlease enter the maximum value for operand\n";
+        std::cout << "\nPlease enter the number of questions per game\n";
         std::cin >> optionMenu->questionLength;
         clear();
 
@@ -242,10 +242,24 @@ void arithmeticGame(int min, int max, int type, int num) {
     }
     t2 = timeMilli();
     double seconds = difftime(t2, t1) / 1000.0;
-    std::cout << "Please enter a name for your score:\n";
+    bool validName = false;
     std::string userInput;
-    std::cin >> userInput;
-    clear();
+    while (!validName)
+    {
+        std::cout << "Please enter a name for your score (15 characters):\n";
+        std::cin >> userInput;
+        clear();
+
+        if (userInput.length() > 15)
+        {
+            std::cout << "Invalid Name\n";
+        }
+        else
+        {
+            validName = true;
+        }
+    }
+    
     Score* newScore = new Score(score, num, seconds, type, userInput);
     scoreboard->addScore(newScore);
     scoreboard->serialize();
